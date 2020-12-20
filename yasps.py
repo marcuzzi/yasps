@@ -1,3 +1,6 @@
+import scraper.log
+logger = scraper.log.setup_custom_logger('yasps')
+
 from scraper.scraper import *
 import curses
 import sys

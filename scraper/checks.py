@@ -1,8 +1,11 @@
 from bs4 import BeautifulSoup
 from enum import Enum
+import logging
 import re
 import requests
 from urllib.parse import urlsplit
+
+logger = logging.getLogger('yasps')
 
 # SCRAPER CLASSES
 
@@ -43,7 +46,10 @@ class CheckSoup(Check):
     def __init__(self, item, shop, url): 
         super().__init__(item, shop, url)
     def run(self):
-        req = request_item(self.url, self.shop)
+        try:
+            req = request_item(self.url, self.shop)
+        except:
+            return ShopItemStatus(ItemAvailability.Unknown, self.shop, None)
         soup = BeautifulSoup(req.text, "html.parser")
         availability = self.get_availability(soup)
         price = self.get_price(soup)
@@ -109,7 +115,10 @@ class CheckRE(Check):
     def __init__(self, item, shop, url): 
         super().__init__(item, shop, url)
     def run(self):
-        req = request_item(self.url, self.shop)
+        try:
+            req = request_item(self.url, self.shop)
+        except:
+            return ShopItemStatus(ItemAvailability.Unknown, self.shop, None)
         inStock = not (self.sinStock in req.text)
         availability = ItemAvailability.InStock if inStock else ItemAvailability.OutOfStock
         price = get_price(req.text, self.priceRE)
@@ -196,15 +205,15 @@ def request_item(url, shop):
         req = requests.get(url, timeout=10, headers=headers)
         req.raise_for_status()
     except requests.exceptions.HTTPError as err:
-        log.info(f"{shop} returned {str(req.status_code)}")
-        return ShopItemStatus(ItemAvailability.Unknown, shop, None)
+        logger.info(f"{shop} returned {str(req.status_code)}")
+        raise
     except requests.exceptions.ConnectionError as errc:
-        log.info(f"{shop} Connection Error")
-        return ShopItemStatus(ItemAvailability.Unknown, shop, None)
+        logger.info(f"{shop} Connection Error")
+        raise
     except requests.exceptions.Timeout as errt:
-        log.info(f"{shop} Connection Timeout")
-        return ShopItemStatus(ItemAvailability.Unknown, shop, None)
+        logger.info(f"{shop} Connection Timeout")
+        raise
     except:
-        log.info(f"{shop} Request Error")
-        return ShopItemStatus(ItemAvailability.Unknown, shop, None)
+        logger.info(f"{shop} Request Error")
+        raise
     return req

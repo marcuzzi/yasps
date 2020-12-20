@@ -163,6 +163,8 @@ def main_curses(stdscr, monitors, interval_min, interval_max, beep):
             log.emit(monitor.item, "En stock" if inStock else "Sin stock")
             anyInPrice = anyInPrice or inPrice
             row = row + monitor.get_count() + 1
+            if escape_pressed_curses(mainwin):
+                return
         mainwin.refresh()
         endTime = time.time()
         elapsedTime = int(endTime - startTime)

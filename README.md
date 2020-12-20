@@ -3,7 +3,7 @@
 ## Introduction
 yasps is another scraper written in python to find articles with limited stock.
 
-It is written Python3 using requests and beautifulsoup libraries. It also uses curses to actively display results. It has some dependencies on Windows libraries (winsound package) which can be easily rewritten for compatibility with other OSes.
+It is written Python3 using `requests` and `beautifulsoup` libraries. It also uses `curses` to actively display results. It has some dependencies on Windows libraries (`winsound` package) which can be easily rewritten for compatibility with other OSes.
 
 ## Motivation
 
@@ -12,21 +12,29 @@ Christmas 2020 will go down in history as the crisis of stock of various electro
 - Nvidia RTX 30 and 58xx, 59xx AMD GPUs
 - PS5 and Xbox Series X/S new generation consoles
 
+This version includes web scraping code for the following stores:
+- PCComponentes
+- Wipoid
+- VSGamers
+- Neobyte
+- Amazon
+- Coolmod
+- Alternate
+
 ## How to run
 
 1. Clone the repository
-2. Run
+2. Install all dependencies with `pip install`:
    ```
-   python install.py install
+   pip install beautifulsoup4
+   pip install pynput
+   pip install requests
+   pip install windows-curses
    ```
-   Alternatively install all dependencies with `pip install`
-   - beautifulsoup4
-   - keyboard
-   - pynput
-   - requests
-   - windows-curses
    
-   Note: Sound alert function is based on winsound library for Windows systems. This needs to be modified to run this program in other OSes.
+   Note: `windows-curses` is a Windows implementation of curses. Replace this with your curses library of choice in other OSes.
+   
+   Note: Sound alert function is based on the `winsound` library (Windows). Replace this with your sound library of choice in other OSes.
    
 3. Edit `yasps.py` to include items and URLs to monitor.
 
