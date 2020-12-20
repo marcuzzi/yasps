@@ -1,28 +1,29 @@
-from distutils.core import setup
-import setuptools
 import os
+from setuptools import setup, find_packages
 
-# Optional project description in README.md:
-current_directory = os.path.dirname(os.path.abspath(__file__))
-try:
-    with open(os.path.join(current_directory, ‘README.md’), encoding=’utf-8′) as f:
-        long_description = f.read()
-except Exception:
-    long_description = ”
+def read(fname):
+    return open(os.path.join(os.path.dirname(__file__), fname)).read()
 
-setuptools.setup(
+setup(
     name="yasps",
     version="0.1.0",
     author="Alejandro Martinez",
     author_email="alejandro.martinez.web@gmail.com",
     description="Yet Another Stock Price Scraper",
-    long_description=long_description,
+    long_description=read('README.md'),
     long_description_content_type="text/markdown",
     url="https://github.com/marcuzzi/yasps",
     license="GPL-3.0-or-later",
-	data_files=[("", ["LICENSE.txt", ])],
+	data_files=[("", ["LICENSE", ])],
     platforms=["Windows", ],
-    packages=setuptools.find_packages(","),
+    packages=find_packages(","),
+	install_requires=[
+        'beautifulsoup4',
+        'keyboard',
+        'pynput',
+        'requests',
+        'windows-curses'	
+    ],
     classifiers=[
         'Programming Language :: Python :: 3',
         'License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)',

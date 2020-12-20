@@ -1,4 +1,4 @@
-from lib.scraper import *
+from scraper.scraper import *
 import curses
 import sys
 import time
