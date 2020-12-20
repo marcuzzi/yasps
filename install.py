@@ -19,10 +19,9 @@ setup(
     packages=find_packages(","),
 	install_requires=[
         'beautifulsoup4',
-        'keyboard',
         'pynput',
         'requests',
-        'windows-curses'	
+        'curses'	
     ],
     classifiers=[
         'Programming Language :: Python :: 3',
